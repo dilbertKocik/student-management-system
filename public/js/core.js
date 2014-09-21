@@ -6,7 +6,7 @@ function mainController($scope, $http) {
     $http.get('/api/students')
         .success(function(data) {
             $scope.students = data;
-            console.log(data);
+            console.log('getting data: ' + data);
         })
         .error(function(data) {
             console.log('Error getting students: ' + data);

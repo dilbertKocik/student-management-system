@@ -1,10 +1,51 @@
 <!doctype html>
 
-<html ng-app="">
+<html ng-app="StudentManagementSystem">
 <head>
     <title>Student Management System</title>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <style>
+        html            { overflow-y:scroll; }
+        body            { padding-top:50px; }
+        #student-list   { margin-bottom:30px; }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="./js/core.js"></script>
+    <script src="./js/mainController.js"></script>
+    <script src="./js/studentService.js"></script>
 </head>
-<body>
-    <h1>Hello World!</h1>
+<body ng-controller="mainController">
+    <div class="container">
+
+        <div class="jumbotron text-center">
+            <h1>Currently enrolled students: <span class="label label-info">{{ students.length }}</span></h1>
+        </div>
+
+        <div id="student-list" class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+
+                <div class="checkbox" ng-repeat="student in students">
+                    <label>
+                        <input type="checkbox" ng-click="deleteStudent(student.studentName)"> {{ student.studentName }}
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="student-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg text-center" placeholder="John Smith" ng-model="formData.studentName">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createStudent()">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

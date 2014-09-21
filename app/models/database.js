@@ -12,59 +12,31 @@ function DBConnection(opts) {
         password: opts.password,
         database: opts.databaseName
     });
-}
-
-DBConnection.prototype.getStudents = function () {
-    this.connection.connect();
-
-    this.connection.query('select * from Students', function(err, rows, fields) {
-        if (err)
-        {
-            throw err;
-        }
-
-        for (var i in rows)
-        {
-            console.log('Student Name: ' + rows[i].studentName);
-        }
-    });
-
-    this.connection.end();
+    this.studentList = {"studentName": "test data"};
 }
 
 DBConnection.prototype.createStudent = function (studentName) {
-    this.connection.connect();
-
-    this.connection.query(('insert into' + this.connection.database + '.Students (studentName) VALUES ("'
-            + studentName + '")'), function(err, rows, fields) {
+    var queryString = 'insert into ' + this.connection.config.database + '.Students (studentName) values (' + this.connection.escape(studentName) + ')';
+    console.log(queryString);
+    console.log("student name: " + this.connection.escape(studentName));
+    this.connection.query(queryString, function(err, rows, fields) {
         if (err) throw err;
     });
-
-    this.connection.end();
 }
 
 DBConnection.prototype.deleteStudent = function (studentName) {
-    this.connection.connect();
-
-    this.connection.query(('delete from ' + this.connection.database + '.Students where studentName = "'
-            + studentName + '"'), function(err, rows, fields) {
+    var queryString = 'delete from ' + this.connection.config.database + '.Students where studentName = ' + this.connection.escape(studentName);
+    this.connection.query(queryString, function(err, rows, fields) {
         if (err) throw err;
     });
-
-    this.connection.end();
 }
 
 DBConnection.prototype.updateStudent = function (currentStudentName, newStudentName) {
-    this.connection.connect();
-
-    this.connection.query(('update ' + this.connection.database + '.Students set studentName = "'
-            + newStudentName + '" where studentName = "' + currentStudentName + '"'), function(err, rows, fields) {
+    var queryString = 'update ' + this.connection.config.database + '.Students set studentName = "' + this.connection.escape(newStudentName) + '"' + ' where studentName = ' + this.connection.escape(currentStudentName);
+    this.connection.query(queryString, function(err, rows, fields) {
         if (err) throw err;
     });
-
-    this.connection.end();
 }
-
 
 module.exports = {
     connection: DBConnection
