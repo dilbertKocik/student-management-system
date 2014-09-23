@@ -5,17 +5,18 @@
     <title>Student Management System</title>
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <style>
         html            { overflow-y:scroll; }
         body            { padding-top:50px; }
         #student-list   { margin-bottom:30px; }
+        #student-form   { margin-bottom:30px; }
     </style>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-    <script src="./js/core.js"></script>
-    <script src="./js/mainController.js"></script>
-    <script src="./js/studentService.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/mainController.js"></script>
+    <script src="js/studentService.js"></script>
 </head>
 <body ng-controller="mainController">
     <div class="container">
@@ -26,13 +27,28 @@
 
         <div id="student-list" class="row">
             <div class="col-sm-4 col-sm-offset-4">
-
-                <div class="checkbox" ng-repeat="student in students">
-                    <label>
-                        <input type="checkbox" ng-click="deleteStudent(student.studentName)"> {{ student.studentName }}
-                    </label>
+                <div ng-repeat="student in students">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-click="deleteStudent(student.studentName)"> {{ student.studentName }}
+                        </label>
+                    </div>
+                    <div id="update-form-{{ student.studentName }}" class="row">
+                        <div class="col-sm-4 col-sm-offset-2 text-center">
+                            <form class="ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <div class="ng-binding">
+                                        <input id="update-text-{{ student.studentName }}" type="text" class="form-control input-sm text-center ng-pristine ng-valid" placeholder="{{ student.studentName }}" ng-model="newStudentName">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-secondary btn-sm" ng-click="updateStudent(student.studentName, newStudentName)">Update</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
+                <p class="text-center" ng-show="loading">
+                    <span class="fa fa-spinner fa-spin fa-3x"></span>
+                </p>
             </div>
         </div>
 

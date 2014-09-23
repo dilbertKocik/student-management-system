@@ -31,4 +31,18 @@ angular.module('studentController', [])
                     $scope.students = data;
                 });
         };
+
+        $scope.updateStudent = function(currentStudentName, newStudentName) {
+            $scope.loading = true;
+
+            if (newStudentName != undefined) {
+                var updateStudentObj = { "currentStudentName": currentStudentName, "newStudentName": newStudentName };
+                students.updateStudent(updateStudentObj)
+                    .success(function(data) {
+                        $scope.loading = false;
+                        $scope.newStudentName = "";
+                        $scope.students = data;
+                    });
+            }
+        };
     }]);

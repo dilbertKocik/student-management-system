@@ -8,7 +8,10 @@ angular.module('studentService', [])
                 return $http.post('/api/students', studentData);
             },
             deleteStudent: function(studentName) {
-                return $http.deleteStudent('/api/students/' + studentName);
+                return $http.delete('/api/students/' + studentName);
+            },
+            updateStudent: function(updateStudentObj) {
+                return $http.put('/api/students', updateStudentObj);
             }
         }
     }]);

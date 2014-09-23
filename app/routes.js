@@ -6,11 +6,6 @@ var dbo = new db.connection(dbCreds);
 module.exports = function(app) {
     app.get('/api/students', function(req, res) {
         dbo.connection.query('select * from Students', function(err, rows, fields) {
-            if (err)
-            {
-                throw err;
-            }
-
             if (rows.length > 0) {
                 res.json(rows);
             }
@@ -18,11 +13,37 @@ module.exports = function(app) {
     });
 
     app.post('/api/students', function(req, res) {
-        dbo.createStudent(req.body.studentName);
+        var queryString = 'insert into ' + dbo.connection.config.database + '.Students (studentName) values (' + dbo.connection.escape(req.body.studentName) + ')';
+        dbo.connection.query(queryString, function(err, rows, fields) {
+            dbo.connection.query('select * from Students', function(err, rows, fields) {
+                if (rows.length > 0) {
+                    res.json(rows);
+                }
+            });
+        });
     });
 
     app.delete('/api/students/:studentName', function(req, res) {
-        dbo.deleteStudent(req.params.studentName);
+        var queryString = 'delete from ' + dbo.connection.config.database + '.Students where studentName = ' + dbo.connection.escape(req.params.studentName);
+        dbo.connection.query(queryString, function(err, rows, fields) {
+            dbo.connection.query('select * from Students', function(err, rows, fields) {
+                if (rows.length > 0) {
+                    res.json(rows);
+                }
+            });
+        });
+
+    });
+
+    app.put('/api/students', function(req, res) {
+        var queryString = 'update ' + dbo.connection.config.database + '.Students set studentName = ' + dbo.connection.escape(req.body.newStudentName) + ' where studentName = '+ dbo.connection.escape(req.body.currentStudentName);
+        dbo.connection.query(queryString, function(err, rows, fields) {
+            dbo.connection.query('select * from Students', function(err, rows, fields) {
+                if (rows.length > 0) {
+                    res.json(rows);
+                }
+            });
+        });
     });
 
     app.get('*', function(req, res) {
