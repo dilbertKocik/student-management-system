@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="main.css">
     <style>
         html            { overflow-y:scroll; }
         body            { padding-top:50px; }
@@ -14,6 +15,8 @@
     </style>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
+    <script src="http://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
     <script src="js/core.js"></script>
     <script src="js/mainController.js"></script>
     <script src="js/studentService.js"></script>
@@ -29,9 +32,7 @@
             <div class="col-sm-4 col-sm-offset-4">
                 <div ng-repeat="student in students">
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-click="deleteStudent(student.studentName)"> {{ student.studentName }}
-                        </label>
+                        <label>{{ student.studentName }}</label>
                     </div>
                     <div id="update-form-{{ student.studentName }}" class="row">
                         <div class="col-sm-4 col-sm-offset-2 text-center">
@@ -41,7 +42,10 @@
                                         <input id="update-text-{{ student.studentName }}" type="text" class="form-control input-sm text-center ng-pristine ng-valid" placeholder="{{ student.studentName }}" ng-model="newStudentName">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-secondary btn-sm" ng-click="updateStudent(student.studentName, newStudentName)">Update</button>
+                                <div class="btn-group btn-group-xs">
+                                    <button type="button" class="btn btn-secondary" ng-click="updateStudent(student.studentName, newStudentName)">Update</button>
+                                    <button type="button" class="btn btn-danger" ng-click="deleteStudent(student.studentName)">Delete</button>
+                                </div>
                             </form>
                         </div>
                     </div>

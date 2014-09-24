@@ -1,5 +1,5 @@
-angular.module('studentController', [])
-    .controller('mainController', ['$scope', '$http', 'students', function($scope, $http, students) {
+angular.module('studentController', ['ui.bootstrap', 'dialogs'])
+    .controller('mainController', ['$scope', '$http', '$dialogs', 'students', function($scope, $http, $dialogs, students) {
         $scope.formData = {};
         $scope.loading = true;
 
@@ -25,11 +25,16 @@ angular.module('studentController', [])
         $scope.deleteStudent = function(studentName) {
             $scope.loading = true;
 
-            students.deleteStudent(studentName)
-                .success(function(data) {
-                    $scope.loading = false;
-                    $scope.students = data;
-                });
+            dlg = $dialogs.confirm('Please Confirm','Are you sure you want to permanently delete ' + studentName + '?');
+            dlg.result.then(function(btn) {
+                students.deleteStudent(studentName)
+                    .success(function(data) {
+                        $scope.students = data;
+                    });
+            }, function(btn) {
+            });
+
+            $scope.loading = false;
         };
 
         $scope.updateStudent = function(currentStudentName, newStudentName) {
