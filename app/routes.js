@@ -1,4 +1,4 @@
-var db = require('./models/database.js');
+var db = require('./database.js');
 var dbCreds = require('./credentials.json');
 
 var dbo = new db.connection(dbCreds);
