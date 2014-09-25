@@ -15,20 +15,6 @@ function DBConnection(opts) {
     this.studentList = {"studentName": "test data"};
 }
 
-DBConnection.prototype.createStudent = function (studentName) {
-    var queryString = 'insert into ' + this.connection.config.database + '.Students (studentName) values (' + this.connection.escape(studentName) + ')';
-    this.connection.query(queryString, function(err, rows, fields) {
-        //if (err) throw err;
-    });
-}
-
-DBConnection.prototype.updateStudent = function (currentStudentName, newStudentName) {
-    var queryString = 'update ' + this.connection.config.database + '.Students set studentName = "' + this.connection.escape(newStudentName) + '"' + ' where studentName = ' + this.connection.escape(currentStudentName);
-    this.connection.query(queryString, function(err, rows, fields) {
-        //if (err) throw err;
-    });
-}
-
 module.exports = {
     connection: DBConnection
 };
