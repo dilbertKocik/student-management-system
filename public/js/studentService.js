@@ -4,14 +4,14 @@ angular.module('studentService', [])
             get: function() {
                 return $http.get('/api/students');
             },
-            createStudent: function(studentData) {
-                return $http.post('/api/students', studentData);
+            createStudent: function(studentName) {
+                return $http.post('/api/students/' + studentName);
             },
             deleteStudent: function(studentName) {
                 return $http.delete('/api/students/' + studentName);
             },
-            updateStudent: function(updateStudentObj) {
-                return $http.put('/api/students', updateStudentObj);
+            updateStudent: function(currentStudentName, newStudentName) {
+                return $http.put('/api/students/' + currentStudentName + '/' + newStudentName);
             }
         }
     }]);

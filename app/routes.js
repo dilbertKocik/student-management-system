@@ -12,8 +12,8 @@ module.exports = function(app) {
         });
     });
 
-    app.post('/api/students', function(req, res) {
-        var queryString = 'insert into ' + dbo.connection.config.database + '.Students (studentName) values (' + dbo.connection.escape(req.body.studentName) + ')';
+    app.post('/api/students/:studentName', function(req, res) {
+        var queryString = 'insert into ' + dbo.connection.config.database + '.Students (studentName) values (' + dbo.connection.escape(req.params.studentName) + ')';
         dbo.connection.query(queryString, function(err, rows, fields) {
             dbo.connection.query('select * from Students', function(err, rows, fields) {
                 if (rows.length > 0) {
@@ -35,8 +35,8 @@ module.exports = function(app) {
 
     });
 
-    app.put('/api/students', function(req, res) {
-        var queryString = 'update ' + dbo.connection.config.database + '.Students set studentName = ' + dbo.connection.escape(req.body.newStudentName) + ' where studentName = '+ dbo.connection.escape(req.body.currentStudentName);
+    app.put('/api/students/:currentStudentName/:newStudentName', function(req, res) {
+        var queryString = 'update ' + dbo.connection.config.database + '.Students set studentName = ' + dbo.connection.escape(req.params.newStudentName) + ' where studentName = '+ dbo.connection.escape(req.params.currentStudentName);
         dbo.connection.query(queryString, function(err, rows, fields) {
             dbo.connection.query('select * from Students', function(err, rows, fields) {
                 if (rows.length > 0) {

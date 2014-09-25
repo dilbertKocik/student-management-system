@@ -9,11 +9,11 @@ angular.module('studentController', ['ui.bootstrap', 'dialogs'])
                 $scope.loading = false;
             });
 
-        $scope.createStudent = function() {
+        $scope.createStudent = function(newStudentName) {
             $scope.loading = true;
 
-            if ($scope.formData.studentName != undefined) {
-                students.createStudent($scope.formData)
+            if (newStudentName != undefined) {
+                students.createStudent(newStudentName)
                     .success(function(data) {
                         $scope.loading = false;
                         $scope.formData = {};
@@ -42,7 +42,7 @@ angular.module('studentController', ['ui.bootstrap', 'dialogs'])
 
             if (newStudentName != undefined) {
                 var updateStudentObj = { "currentStudentName": currentStudentName, "newStudentName": newStudentName };
-                students.updateStudent(updateStudentObj)
+                students.updateStudent(currentStudentName, newStudentName)
                     .success(function(data) {
                         $scope.loading = false;
                         $scope.newStudentName = "";
