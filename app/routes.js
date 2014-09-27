@@ -9,6 +9,10 @@ module.exports = function(app) {
             if (rows.length > 0) {
                 res.json(rows);
             }
+            else
+            {
+                res.json([]);
+            }
         });
     });
 
@@ -19,28 +23,40 @@ module.exports = function(app) {
                 if (rows.length > 0) {
                     res.json(rows);
                 }
+                else
+                {
+                    res.json([]);
+                }
             });
         });
     });
 
-    app.delete('/api/students/:studentName', function(req, res) {
-        var queryString = 'delete from ' + dbo.connection.config.database + '.Students where studentName = ' + dbo.connection.escape(req.params.studentName);
+    app.delete('/api/students/:studentID', function(req, res) {
+        var queryString = 'delete from ' + dbo.connection.config.database + '.Students where studentID = ' + dbo.connection.escape(req.params.studentID);
         dbo.connection.query(queryString, function(err, rows, fields) {
             dbo.connection.query('select * from Students', function(err, rows, fields) {
                 if (rows.length > 0) {
                     res.json(rows);
+                }
+                else
+                {
+                    res.json([]);
                 }
             });
         });
 
     });
 
-    app.put('/api/students/:currentStudentName/:newStudentName', function(req, res) {
-        var queryString = 'update ' + dbo.connection.config.database + '.Students set studentName = ' + dbo.connection.escape(req.params.newStudentName) + ' where studentName = '+ dbo.connection.escape(req.params.currentStudentName);
+    app.put('/api/students/:studentID/:newStudentName', function(req, res) {
+        var queryString = 'update ' + dbo.connection.config.database + '.Students set studentName = ' + dbo.connection.escape(req.params.newStudentName) + ' where studentID = '+ dbo.connection.escape(req.params.studentID);
         dbo.connection.query(queryString, function(err, rows, fields) {
             dbo.connection.query('select * from Students', function(err, rows, fields) {
                 if (rows.length > 0) {
                     res.json(rows);
+                }
+                else
+                {
+                    res.json([]);
                 }
             });
         });

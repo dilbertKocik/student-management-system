@@ -7,11 +7,11 @@ angular.module('studentService', [])
             createStudent: function(studentName) {
                 return $http.post('/api/students/' + studentName);
             },
-            deleteStudent: function(studentName) {
-                return $http.delete('/api/students/' + studentName);
+            deleteStudent: function(studentID) {
+                return $http.delete('/api/students/' + studentID);
             },
-            updateStudent: function(currentStudentName, newStudentName) {
-                return $http.put('/api/students/' + currentStudentName + '/' + newStudentName);
+            updateStudent: function(studentID, newStudentName) {
+                return $http.put('/api/students/' + studentID + '/' + newStudentName);
             }
         }
     }]);

@@ -22,12 +22,12 @@ angular.module('studentController', ['ui.bootstrap', 'dialogs'])
             }
         };
 
-        $scope.deleteStudent = function(studentName) {
+        $scope.deleteStudent = function(studentID, studentName) {
             $scope.loading = true;
 
             dlg = $dialogs.confirm('Please Confirm','Are you sure you want to permanently delete ' + studentName + '?');
             dlg.result.then(function(btn) {
-                students.deleteStudent(studentName)
+                students.deleteStudent(studentID)
                     .success(function(data) {
                         $scope.students = data;
                     });
@@ -37,12 +37,12 @@ angular.module('studentController', ['ui.bootstrap', 'dialogs'])
             $scope.loading = false;
         };
 
-        $scope.updateStudent = function(currentStudentName, newStudentName) {
+        $scope.updateStudent = function(studentID, newStudentName) {
             $scope.loading = true;
 
             if (newStudentName != undefined) {
-                var updateStudentObj = { "currentStudentName": currentStudentName, "newStudentName": newStudentName };
-                students.updateStudent(currentStudentName, newStudentName)
+                var updateStudentObj = { "studentID": studentID, "newStudentName": newStudentName };
+                students.updateStudent(studentID, newStudentName)
                     .success(function(data) {
                         $scope.loading = false;
                         $scope.newStudentName = "";
