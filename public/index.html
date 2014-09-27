@@ -31,20 +31,20 @@
         <div id="student-list" class="row">
             <div class="col-sm-4 col-sm-offset-4">
                 <div ng-repeat="student in students">
-                    <div class="checkbox">
-                        <label>{{ student.studentName }}</label>
-                    </div>
                     <div id="update-form-{{ student.studentName }}" class="row">
-                        <div class="col-sm-4 col-sm-offset-2 text-center">
+                        <div>
                             <form class="ng-pristine ng-valid">
                                 <div class="form-group">
-                                    <div class="ng-binding">
+                                    <div class="col-sm-4 text-right">
+                                        <label>{{ student.studentName }}</label>
+                                    </div>
+                                    <div class="ng-binding col-sm-4">
                                         <input id="update-text-{{ student.studentName }}" type="text" class="form-control input-sm text-center ng-pristine ng-valid" placeholder="{{ student.studentName }}" ng-model="newStudentName">
                                     </div>
-                                </div>
-                                <div class="btn-group btn-group-xs">
-                                    <button type="button" class="btn btn-secondary" ng-click="updateStudent(student.studentID, newStudentName)">Update</button>
-                                    <button type="button" class="btn btn-danger" ng-click="deleteStudent(student.studentID, student.studentName)">Delete</button>
+                                    <div class="btn-group btn-group-xs col-sm-4">
+                                        <button type="button" class="btn btn-secondary" ng-click="updateStudent(student.studentID, newStudentName)">Update</button>
+                                        <button type="button" class="btn btn-danger" ng-click="deleteStudent(student.studentID, student.studentName)">Delete</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
